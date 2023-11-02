@@ -2,6 +2,7 @@
 # !/usr/bin/python3
 
 import os
+import time
 import traceback
 import SenseHatMatrix
 from Misc import get911, sendEmail
@@ -16,7 +17,9 @@ if __name__ == '__main__':
         # Call the main function
         logger.info("Stopping Show")
         logger.info("Clear Sense Matrix")
+        time.sleep(3)
         sense.clear()
+
     except Exception as ex:
         # Log the error and send an email notification
         logger.error(traceback.format_exc())
