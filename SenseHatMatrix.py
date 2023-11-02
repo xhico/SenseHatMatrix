@@ -10,14 +10,18 @@ import random
 import time
 from sense_hat import SenseHat
 from Misc import get911, sendEmail
+import signal
+import sys
 
-# Set logging configuration
-LOG_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.path.abspath(__file__).replace(".py", ".log"))
-logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s", handlers=[logging.FileHandler(LOG_FILE), logging.StreamHandler()])
-logger = logging.getLogger()
 
-# Create sense hat
-sense = SenseHat()
+def signal_handler(sig, frame):
+    if sig == signal.SIGTERM:
+        logger.info("Script terminated by SIGTERM")
+        sense.clear()
+        sys.exit(0)
+
+
+signal.signal(signal.SIGTERM, signal_handler)
 
 
 def display_random():
@@ -124,6 +128,11 @@ def main():
 
 
 if __name__ == '__main__':
+    # Set logging configuration
+    LOG_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.path.abspath(__file__).replace(".py", ".log"))
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s", handlers=[logging.FileHandler(LOG_FILE), logging.StreamHandler()])
+    logger = logging.getLogger()
+
     # Log the start of the script
     logger.info("----------------------------------------------------")
 
@@ -131,6 +140,9 @@ if __name__ == '__main__':
     configFile = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.json")
     with open(configFile) as inFile:
         config = json.load(inFile)
+
+    # Create sense hat
+    sense = SenseHat()
 
     try:
         # Call the main function
