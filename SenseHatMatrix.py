@@ -8,6 +8,8 @@ import os
 import traceback
 import random
 import time
+
+import requests
 from sense_hat import SenseHat
 from Misc import get911, sendEmail
 import signal
@@ -17,7 +19,14 @@ import sys
 def signal_handler(sig, frame):
     if sig == signal.SIGTERM:
         logger.info("Script terminated by SIGTERM")
+
+        logger.info("Turning off SenseHat")
         sense.clear()
+
+        logger.info("Turning off LED Strip")
+        resp = requests.post("https://monitor.rpi4.xhico/ledircontroller/btn", data={"value": "off"})
+        logger.info(resp.text)
+
         sys.exit(0)
 
 
