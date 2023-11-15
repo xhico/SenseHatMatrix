@@ -25,7 +25,7 @@ def signal_handler(sig, frame):
 
         logger.info("Turning off LED Strip")
         resp = requests.post("https://monitor.rpi4.xhico/ledircontroller/btn", data={"value": "off"})
-        logger.info(resp.text)
+        logger.info(resp.json()["message"])
 
         sys.exit(0)
 
