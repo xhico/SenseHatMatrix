@@ -8,12 +8,11 @@ import os
 import traceback
 import random
 import time
-
+import signal
+import sys
 import requests
 from sense_hat import SenseHat
 from Misc import get911, sendEmail
-import signal
-import sys
 
 
 def signal_handler(sig, frame):
