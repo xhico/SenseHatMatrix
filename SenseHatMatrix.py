@@ -5,14 +5,16 @@ import colorsys
 import json
 import logging
 import os
-import traceback
 import random
-import time
 import signal
 import sys
+import time
+import traceback
+
 import requests
 from sense_hat import SenseHat
-from Misc import get911, sendEmail
+
+from Misc import sendEmail
 
 
 def signal_handler(sig, frame):
